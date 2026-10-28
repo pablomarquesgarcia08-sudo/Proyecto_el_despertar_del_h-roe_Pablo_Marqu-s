@@ -92,7 +92,51 @@ public class Proyecto {
         nombre = teclado.nextLine();
 
         System.out.println("Hola " + nombre + ", ahora eres un héroe.");
+        explorarInicio(teclado);
+
          
+    }
+
+    public static void explorarInicio(Scanner teclado)
+    {
+    String opcion;
+
+    System.out.println("\nDespiertas en una aldea abandonada...");
+
+    do {
+        System.out.println("\n¿Qué deseas hacer?");
+        System.out.println("1. Caminar");
+        System.out.println("2. Hablar con el comerciante");
+        System.out.println("3. Descansar");
+        System.out.println("4. Abandonar la partida");
+
+        opcion = teclado.nextLine();
+
+        switch (opcion) {
+
+            case "1":
+                System.out.println("Avanzas hacia la fortaleza...");
+                System.out.println("Un enemigo aparece frente a ti.");
+                break;
+
+            case "2":
+                System.out.println("Comerciante: Ten cuidado con los guardianes.");
+                break;
+
+            case "3":
+                System.out.println("Descansas unos instantes.");
+                break;
+
+            case "4":
+                System.out.println("Has decidido abandonar la aventura.");
+                break;
+
+            default:
+                System.out.println("Opción incorrecta.");
+                break;
+        }
+
+        } while (opcion > 1 && 4 > opcion );
     }
      
 }
