@@ -92,17 +92,20 @@ public class Proyecto {
         Personaje enemigo2 = new Personaje("Caballero", 60, 0, 5, 15);
         Personaje enemigo3 = new Personaje("Guardian final", 80, 0, 5, 15);
 
+        Armas[] inventarioArmas = new Armas[1];
         int[] pociones = {25, 25, 25};
+
+        inventarioArmas[0] = seleccionarArma(teclado);
 
         System.out.println("Hola " + nombre + ", ahora eres un héroe.");
         mostrarVida(heroe);
 
-        explorarInicio(teclado, heroe, enemigo1, enemigo2, enemigo3, pociones);
+        explorarInicio(teclado, heroe, enemigo1, enemigo2, enemigo3, pociones, inventarioArmas);
     }
 
     public static void explorarInicio(Scanner teclado, Personaje heroe,
                                       Personaje enemigo1, Personaje enemigo2,
-                                      Personaje enemigo3, int[] pociones) {
+                                      Personaje enemigo3, int[] pociones, Armas[] inventarioArmas) {
 
         String opcion;
 
@@ -123,21 +126,18 @@ public class Proyecto {
 
                 case "1":
 
-                System.out.println("Avanzas hacia la fortaleza y te encuentras con el Centinela.");
+                System.out.println("\nAvanzas hacia la fortaleza y te encuentras con el Centinela.");
 
-                    if (mostrarmenucombate(teclado, heroe, enemigo1, pociones)) {
+                    if (mostrarmenucombate(teclado, heroe, enemigo1, pociones, inventarioArmas)) {
 
-                        System.out.println("Has derrotado al Centinela.");
                         System.out.println("Avanzas y te encuentras con un Caballero.");
 
-                        if (mostrarmenucombate(teclado, heroe, enemigo2, pociones)) {
+                        if (mostrarmenucombate(teclado, heroe, enemigo2, pociones, inventarioArmas)) {
 
-                            System.out.println("Has derrotado al Caballero.");
                             System.out.println("Avanzas y te encuentras con el Guardian final.");
 
-                            if (mostrarmenucombate(teclado, heroe, enemigo3, pociones)) {
+                            if (mostrarmenucombate(teclado, heroe, enemigo3, pociones, inventarioArmas)) {
 
-                                System.out.println("Has derrotado al Guardian final.");
                                 System.out.println("¡Has completado la aventura!");
                             }
                         }
@@ -150,7 +150,7 @@ public class Proyecto {
                     break;
 
                 case "3":
-                    mostrarInventario(heroe, pociones);
+                    mostrarInventario(heroe, pociones, inventarioArmas);
                     break;
 
                 case "4":
@@ -166,7 +166,7 @@ public class Proyecto {
     }
 
     public static boolean mostrarmenucombate(Scanner teclado, Personaje heroe,
-                                              Personaje enemigo, int[] pociones) {
+                                              Personaje enemigo, int[] pociones, Armas[] inventarioArmas) {
 
         System.out.println("\nTe enfrentas a " + enemigo.getNombre());
 
@@ -203,6 +203,37 @@ public class Proyecto {
 
                     if (enemigo.getVida() == 0) {
                         System.out.println("Has derrotado a " + enemigo.getNombre() + ".");
+
+                        System.out.println("Quieres curarate con una poción? (si/no)");
+                        String respuesta = teclado.nextLine();
+
+                        if (respuesta.equalsIgnoreCase("si")) {
+                            {
+                                if (contarPociones(pociones) == 0) {
+                                    System.out.println("No te quedan pociones.");
+                                }
+                                else if (heroe.getVida() == heroe.getVidaMax()) {
+                                    System.out.println("Ya tienes la vida al máximo.");
+                                }
+                                //Se puede seguir curando aun habiendo derrotado al ultimo enemigo, revisar.-------------------------------------------
+                                else {
+                                    for (int i = 0; i < pociones.length; i++) {
+                                        
+                                        if (pociones[i] > 0) {
+
+                                            heroe.setVida(heroe.getVida() + pociones[i]);
+                                            pociones[i] = 0;
+
+                                            System.out.println("Has usado una poción.");
+                                            mostrarVida(heroe);
+
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
                     }
                     else {
                         contraataca = true;
@@ -210,6 +241,7 @@ public class Proyecto {
 
                     break;
 
+                
                 case "2":
 
                     if (contarPociones(pociones) == 0) {
@@ -240,7 +272,7 @@ public class Proyecto {
                     break;
 
                 case "3":
-                    mostrarInventario(heroe, pociones);
+                    mostrarInventario(heroe, pociones, inventarioArmas);
                     break;
 
                 case "4":
@@ -298,13 +330,43 @@ public class Proyecto {
         return cantidad;
     }
 
-    public static void mostrarInventario(Personaje heroe, int[] pociones) {
+    public static void mostrarInventario(Personaje heroe, int[] pociones, Armas[] inventarioArmas) {
+
+        //Lo quito?-------------------------------------------------------------------
 
         mostrarVida(heroe);
 
         System.out.println("Pociones disponibles: "
                 + contarPociones(pociones));
+
+        System.out.println("Tu arma actual es: " + inventarioArmas[0].getNombre());
     }
 
-    
+
+    public static Armas seleccionarArma(Scanner teclado) {
+
+        String opcion;
+
+        while (true) {
+            System.out.println("\nSelecciona un arma:");
+            System.out.println("1. Colmillo Sombrio (10-14 de daño y 30% de probabilidad de esquivar)");
+            System.out.println("2. Juramento de Acero (12-17 de daño y 15% de probabilidad de esquivar)");
+            System.out.println("3. Ira del Titan (15-20 de daño y 0% de probabilidad de esquivar)");
+
+            opcion = teclado.nextLine();
+
+            switch (opcion) {
+                case "1":
+                    return new Armas("Colmillo Sombrio", 10, 14, 30);
+                case "2":
+                    return new Armas("Juramento de Acero", 12, 17, 15);
+                case "3":
+                    return new Armas("Ira del Titan", 15, 20, 0);
+
+                default:
+                    System.out.println("Opción incorrecta.");
+                    break;
+            }
+        }
+    }
 }
