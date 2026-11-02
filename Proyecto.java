@@ -1,181 +1,185 @@
+
 import java.util.Scanner;
 
 public class Proyecto {
 
-    public static void main(String[] args)
-    {
-        Scanner teclado = new Scanner (System.in);
+    public static void main(String[] args) {
+
+        Scanner teclado = new Scanner(System.in);
 
         System.out.println("El despertar del héroe");
+
         String iniciar;
-        int canPociones = 3;
-        int vida;
-        int vidaMax = 100;
-        int pocion = 25;
-        int ataqueMax = 20;
-        int ataqueMin = 10;
-        int vidaMin = 0;
-        int vidaenemigo1 = 40;
-        int vidaenemigo2 = 60;
-        int vidaenemigo3 = 80;
-        int ataqueenemigoMin = 5;
-        int ataqueenemigoMax = 15;
-        int danyoHeroe;
-        int danyoEnemigo;
 
         do {
-            
             System.out.println("¿Quieres iniciar el juego? (si/no)");
-
             iniciar = teclado.nextLine();
 
-            if (iniciar.equalsIgnoreCase("si"))
-                {
+            if (iniciar.equalsIgnoreCase("si")) {
                 System.out.println("El juego se ha iniciado correctamente");
-                }
-            else if (iniciar.equalsIgnoreCase("no")) 
-                {
+            }
+            else if (iniciar.equalsIgnoreCase("no")) {
                 System.out.println("Has decidido salir del juego");
-                }
+            }
             else {
                 System.out.println("Respuesta incorrecta. Escribe si o no.");
             }
 
-        } while (!iniciar.equalsIgnoreCase("si") &&
-                 !iniciar.equalsIgnoreCase("no"));
+        } while (!iniciar.equalsIgnoreCase("si")
+                && !iniciar.equalsIgnoreCase("no"));
 
-        if (iniciar.equalsIgnoreCase("si"))
-        {
-            int opcion;
+        if (iniciar.equalsIgnoreCase("si")) {
 
-            do 
-            {
-            System.out.println("\n -- Menú principal --");
+            String opcion;
 
-            System.out.println("1. Nueva partida");
-            System.out.println("2. Consultar ranking");
-            System.out.println("3. Ayuda");
-            System.out.println("4. Salir");
+            do {
+                System.out.println("\n-- Menú principal --");
+                System.out.println("1. Nueva partida");
+                System.out.println("2. Consultar ranking");
+                System.out.println("3. Ayuda");
+                System.out.println("4. Salir");
 
-            System.out.println("\nSelecciona una opción");
+                System.out.println("\nSelecciona una opción");
 
-            opcion = teclado.nextInt();
-            teclado.nextLine();
+                opcion = teclado.nextLine();
 
-            switch (opcion) {
-                case 1:   
-                     iniciarPartida(teclado);
-                    break;
+                switch (opcion) {
 
-                case 2:
-                     System.out.println("Mostrando ranking..."); 
-                    break;
+                    case "1":
+                        iniciarPartida(teclado);
+                        break;
 
-                case 3:
-                     System.out.println("Mostrando ayuda..."); 
-                    break;
+                    case "2":
+                        System.out.println("Mostrando ranking...");
+                        break;
 
-                case 4:
-                     System.out.println("Saliendo del juego..."); 
-                    break;
+                    case "3":
+                        System.out.println("Mostrando ayuda...");
+                        break;
 
-                default:
-                    System.out.println("Opción incorrecta, selecciona 1, 2, 3 o 4.");
-                    break;
-                    
+                    case "4":
+                        System.out.println("Saliendo del juego...");
+                        break;
+
+                    default:
+                        System.out.println("Opción incorrecta.");
+                        break;
                 }
-            } while (opcion < 1 && opcion < 4 );
 
-            
-                
-
+            } while (!opcion.equals("4"));
         }
     }
 
-    public static void iniciarPartida(Scanner teclado)
-    {
+    public static void iniciarPartida(Scanner teclado) {
+
         String nombre;
 
         System.out.println("Iniciando nueva partida...");
 
         do {
-        
-        System.out.print("\nIntroduce el nombre del héroe: ");
-        nombre = teclado.nextLine();
+            System.out.print("\nIntroduce el nombre del héroe: ");
+            nombre = teclado.nextLine();
 
-        if (nombre.isEmpty()) {
-            System.out.println("\nError: El nombre no puede estar vacío");
-        }
-        
+            if (nombre.isEmpty()) {
+                System.out.println("Error: El nombre no puede estar vacío");
+            }
+
         } while (nombre.isEmpty());
 
-         Personaje heroe = new Personaje(nombre, 100, 0, 10, 20);
-         System.out.println("Hola " + nombre + ", ahora eres un héroe.");
+        Personaje heroe = new Personaje(nombre, 100, 0, 10, 20);
 
-         System.out.println("Vida: " + heroe.getVida());
-         System.out.println("Ataque mínimo: " + heroe.getAtaqueMin());
-         System.out.println("Ataque máximo: " + heroe.getAtaqueMax());
-         
-         explorarInicio(teclado, heroe);
+        Personaje enemigo1 = new Personaje("Centinela", 40, 0, 5, 15);
+        Personaje enemigo2 = new Personaje("Caballero", 60, 0, 5, 15);
+        Personaje enemigo3 = new Personaje("Guardian final", 80, 0, 5, 15);
 
+        int[] pociones = {25, 25, 25};
 
+        System.out.println("Hola " + nombre + ", ahora eres un héroe.");
+        mostrarVida(heroe);
+
+        explorarInicio(teclado, heroe, enemigo1, enemigo2, enemigo3, pociones);
     }
 
-    public static void explorarInicio(Scanner teclado, Personaje heroe)
-    {
-    String opcion;
-
-    System.out.println("\nDespiertas en una aldea abandonada...");
-    mostrarVida(heroe);
-
-    do {
-        System.out.println("\n¿Qué deseas hacer?");
-        System.out.println("1. Caminar");
-        System.out.println("2. Hablar con el comerciante");
-        System.out.println("3. Ver inventario");
-        System.out.println("4. Abandonar la partida");
-
-        opcion = teclado.nextLine();
-
-        switch (opcion) {
-
-            case "1":
-                mostrarmenucombate(teclado, heroe);
-                break;
-
-            case "2":
-                System.out.println("Comerciante: Ten cuidado con los guardianes.");
-                break;
-
-            case "3":
-                System.out.println("Este es tu inventario.");
-                break;
-
-            case "4":
-                System.out.println("Has decidido abandonar la aventura.");
-                break;
-
-            default:
-                System.out.println("Opción incorrecta.");
-                break;
-        }
-
-        } while (!opcion.equals("1") && !opcion.equals("4"));
-    }
-
-    public static void mostrarmenucombate(Scanner teclado, Personaje heroe)
-    {
-        System.out.println("\nAvanzas hacia la fortaleza...");
-        System.out.println("\nUn enemigo aparece frente a ti.");
-
-        Personaje enemigo = new Personaje("Centinela", 40, 0, 5, 15);
+    public static void explorarInicio(Scanner teclado, Personaje heroe,
+                                      Personaje enemigo1, Personaje enemigo2,
+                                      Personaje enemigo3, int[] pociones) {
 
         String opcion;
 
-        do 
-        {
-            System.out.println("\n--Combate--");
-            System.out.println("\n¿Que quieres hacer?");
+        System.out.println("\nDespiertas en una aldea abandonada...");
+
+        do {
+            mostrarVida(heroe);
+
+            System.out.println("\n¿Qué deseas hacer?");
+            System.out.println("1. Caminar");
+            System.out.println("2. Hablar con el comerciante");
+            System.out.println("3. Ver inventario");
+            System.out.println("4. Abandonar la partida");
+
+            opcion = teclado.nextLine();
+
+            switch (opcion) {
+
+                case "1":
+
+                System.out.println("Avanzas hacia la fortaleza y te encuentras con el Centinela.");
+
+                    if (mostrarmenucombate(teclado, heroe, enemigo1, pociones)) {
+
+                        System.out.println("Has derrotado al Centinela.");
+                        System.out.println("Avanzas y te encuentras con un Caballero.");
+
+                        if (mostrarmenucombate(teclado, heroe, enemigo2, pociones)) {
+
+                            System.out.println("Has derrotado al Caballero.");
+                            System.out.println("Avanzas y te encuentras con el Guardian final.");
+
+                            if (mostrarmenucombate(teclado, heroe, enemigo3, pociones)) {
+
+                                System.out.println("Has derrotado al Guardian final.");
+                                System.out.println("¡Has completado la aventura!");
+                            }
+                        }
+                    }
+
+                    return;
+
+                case "2":
+                    System.out.println("Comerciante: Ten cuidado con los guardianes.");
+                    break;
+
+                case "3":
+                    mostrarInventario(heroe, pociones);
+                    break;
+
+                case "4":
+                    System.out.println("Has decidido abandonar la aventura.");
+                    break;
+
+                default:
+                    System.out.println("Opción incorrecta.");
+                    break;
+            }
+
+        } while (!opcion.equals("4"));
+    }
+
+    public static boolean mostrarmenucombate(Scanner teclado, Personaje heroe,
+                                              Personaje enemigo, int[] pociones) {
+
+        System.out.println("\nTe enfrentas a " + enemigo.getNombre());
+
+        String opcion;
+
+        do {
+            System.out.println("\n-- Combate --");
+
+            mostrarVida(heroe);
+
+            System.out.println("Vida de " + enemigo.getNombre() + ": "
+                    + enemigo.getVida() + "/" + enemigo.getVidaMax());
+
             System.out.println("1. Atacar");
             System.out.println("2. Curarse");
             System.out.println("3. Ver inventario");
@@ -183,57 +187,124 @@ public class Proyecto {
 
             opcion = teclado.nextLine();
 
+            boolean contraataca = false;
+
             switch (opcion) {
+
                 case "1":
-                    System.out.println("Has elegido atacar.");
 
-                    int danyoHeroe = (int) (Math.random() * (heroe.getAtaqueMax() - heroe.getAtaqueMin() + 1) + heroe.getAtaqueMin());
-                    int vidaenemigo1 = enemigo.getVida() - danyoHeroe;
+                    int danyoHeroe = (int) (Math.random() *
+                            (heroe.getAtaqueMax() - heroe.getAtaqueMin() + 1)
+                            + heroe.getAtaqueMin());
 
-                    if (vidaenemigo1 <= 0) {
-                        System.out.println("Has derrotado al enemigo.");
-                    }
+                    enemigo.setVida(enemigo.getVida() - danyoHeroe);
 
-                    enemigo.setVida(vidaenemigo1);
-                    System.out.println("Has infligido " + danyoHeroe + " de daño al enemigo. Vida restante del enemigo: " + enemigo.getVida());
+                    System.out.println("Has infligido " + danyoHeroe + " de daño.");
 
-                    if (enemigo.getVida() > 0) {
-                        int danyoEnemigo = (int) (Math.random() * (enemigo.getAtaqueMax() - enemigo.getAtaqueMin() + 1) + enemigo.getAtaqueMin());
-                        int vidaHeroe = heroe.getVida() - danyoEnemigo;
-
-                        heroe.setVida(vidaHeroe);
-                        System.out.println("El enemigo te ha infligido " + danyoEnemigo + " de daño. Tu vida restante: " + heroe.getVida());
-                    }
-
-                    if (heroe.getVida() == 0){
-                        System.out.println("Has sido derrotado por el enemigo.");
+                    if (enemigo.getVida() == 0) {
+                        System.out.println("Has derrotado a " + enemigo.getNombre() + ".");
                     }
                     else {
-                        System.out.println("Has derrotado al Centinela.");
+                        contraataca = true;
                     }
+
                     break;
-                 case "2":
-                    System.out.println("Has elegido curarte.");
+
+                case "2":
+
+                    if (contarPociones(pociones) == 0) {
+                        System.out.println("No te quedan pociones.");
+                    }
+                    else if (heroe.getVida() == heroe.getVidaMax()) {
+                        System.out.println("Ya tienes la vida al máximo.");
+                    }
+                    else {
+
+                        for (int i = 0; i < pociones.length; i++) {
+
+                            if (pociones[i] > 0) {
+
+                                heroe.setVida(heroe.getVida() + pociones[i]);
+
+                                pociones[i] = 0;
+
+                                System.out.println("Has usado una poción.");
+                                mostrarVida(heroe);
+
+                                contraataca = true;
+                                break;
+                            }
+                        }
+                    }
+
                     break;
-                 case "3":
-                    System.out.println("Mostrando inventario...");
+
+                case "3":
+                    mostrarInventario(heroe, pociones);
                     break;
-                 case "4":
+
+                case "4":
                     System.out.println("Te has rendido.");
                     break;
+
                 default:
                     System.out.println("Opción incorrecta.");
                     break;
             }
-        }while (opcion != "4");
 
+            if (contraataca && enemigo.getVida() > 0) {
+
+                int danyoEnemigo = (int) (Math.random() *
+                        (enemigo.getAtaqueMax() - enemigo.getAtaqueMin() + 1)
+                        + enemigo.getAtaqueMin());
+
+                heroe.setVida(heroe.getVida() - danyoEnemigo);
+
+                System.out.println("El enemigo te ha infligido "
+                        + danyoEnemigo + " de daño.");
+
+                mostrarVida(heroe);
+
+                if (heroe.getVida() == 0) {
+                    System.out.println("Has sido derrotado.");
+                }
+            }
+
+        } while (!opcion.equals("4")
+                && heroe.getVida() > 0
+                && enemigo.getVida() > 0);
+
+        return enemigo.getVida() == 0 && heroe.getVida() > 0;
     }
 
-    public static void mostrarVida(Personaje heroe)
-    {
-            System.out.println("Vida de " + heroe.getNombre()
-            + ": " + heroe.getVida()
-            + "/" + heroe.getVidaMax());
+    public static void mostrarVida(Personaje heroe) {
+
+        System.out.println("Vida de " + heroe.getNombre()
+                + ": " + heroe.getVida()
+                + "/" + heroe.getVidaMax());
     }
-     
+
+    public static int contarPociones(int[] pociones) {
+
+        int cantidad = 0;
+
+        for (int i = 0; i < pociones.length; i++) {
+
+            if (pociones[i] > 0) {
+                cantidad++;
+            }
+        }
+
+        return cantidad;
+    }
+
+    public static void mostrarInventario(Personaje heroe, int[] pociones) {
+
+        mostrarVida(heroe);
+
+        System.out.println("Pociones disponibles: "
+                + contarPociones(pociones));
+    }
+
+    
 }
