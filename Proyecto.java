@@ -53,7 +53,7 @@ public class Proyecto {
                         break;
 
                     case "3":
-                        System.out.println("Mostrando ayuda...");
+                        mostrarAyuda();
                         break;
 
                     case "4":
@@ -370,5 +370,58 @@ public class Proyecto {
                     break;
             }
         }
+    }
+
+    public static void mostrarAyuda() {
+
+    System.out.println("\n====================================");
+    System.out.println("       EL DESPERTAR DEL HEROE");
+    System.out.println("         GUIA DEL AVENTURERO");
+    System.out.println("====================================");
+
+    System.out.println("\n--- LA HISTORIA ---");
+    System.out.println("Despiertas en una aldea abandonada.");
+    System.out.println("Una antigua fortaleza se alza ante ti.");
+    System.out.println("Tres enemigos custodian el camino.");
+    System.out.println("Tu mision es derrotarlos y sobrevivir.");
+
+    System.out.println("\n--- OBJETIVO ---");
+    System.out.println("Derrota a los tres enemigos en orden:");
+    System.out.println("1. Centinela: 40 puntos de vida.");
+    System.out.println("2. Caballero: 60 puntos de vida.");
+    System.out.println("3. Guardian final: 80 puntos de vida.");
+
+    System.out.println("\n--- COMO JUGAR ---");
+    System.out.println("Comienzas con 100 puntos de vida.");
+    System.out.println("Desde la aldea puedes explorar,");
+    System.out.println("hablar con el comerciante o ver tu inventario.");
+    System.out.println("Selecciona Caminar para iniciar la aventura.");
+
+    System.out.println("\n--- DURANTE EL COMBATE ---");
+    System.out.println("1. Atacar: causas entre 10 y 20 de daño.");
+    System.out.println("2. Curarse: recuperas hasta 25 de vida.");
+    System.out.println("3. Inventario: consultas tus pociones.");
+    System.out.println("4. Rendirse: abandonas el combate.");
+
+    System.out.println("\n--- POCIONES ---");
+    System.out.println("Dispones de 3 pociones para toda la aventura.");
+    System.out.println("Cada una recupera hasta 25 puntos de vida.");
+    System.out.println("Nunca puedes superar los 100 puntos de vida.");
+
+    System.out.println("\n--- REGLAS ---");
+    System.out.println("Los enemigos causan entre 5 y 15 de daño.");
+    System.out.println("Los enemigos contraatacan si sobreviven");
+    System.out.println("a tu ataque o utilizas una pocion valida.");
+    System.out.println("Consultar el inventario no consume turno.");
+    System.out.println("Tu vida se conserva entre enfrentamientos.");
+
+    System.out.println("\n--- VICTORIA Y DERROTA ---");
+    System.out.println("Ganas al derrotar al Guardian final.");
+    System.out.println("Pierdes si tu vida llega a cero.");
+    System.out.println("Tambien puedes abandonar la aventura.");
+
+    System.out.println("\nBuena suerte, aventurero.");
+    System.out.println("====================================\n");
+
     }
 }
