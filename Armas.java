@@ -5,10 +5,10 @@ public class Armas {
     private int ataqueMin;
     private int probabilidadesquivar;
 
-    public Armas(String nombre, int ataqueMax, int ataqueMin, int probabilidadesquivar) {
+    public Armas(String nombre, int ataqueMin, int ataqueMax, int probabilidadesquivar) {
         this.nombre = nombre;
-        this.ataqueMax = ataqueMax;
         this.ataqueMin = ataqueMin;
+        this.ataqueMax = ataqueMax;
         this.probabilidadesquivar = probabilidadesquivar;
     }
 
