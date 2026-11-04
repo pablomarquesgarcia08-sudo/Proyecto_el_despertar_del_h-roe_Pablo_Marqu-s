@@ -414,5 +414,10 @@ public class Proyecto {
         System.out.println("\nBuena suerte, aventurero.");
         System.out.println("====================================\n");
 
+        System.out.println("Presiona Enter para volver al menú principal...");
+        Scanner teclado = new Scanner(System.in);
+        teclado.nextLine();
+
     }
 }
+//Preguntar si se puede hacer cooldown el enemigo hace que te golpee si estas 10 segundos sin atacar en batalla, y si atacas se reinicia el cooldown.
