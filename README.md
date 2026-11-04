@@ -42,7 +42,7 @@ La aventura se completa al derrotar al Guardián final. Si el héroe pierde toda
 
 ### Armas disponibles
 
-| **Arma* | **Daño definido** | **Esquiva definida** |
+| **Arma** | **Daño definido** | **Esquiva definida** |
 | --- | --- | ---: |
 | Colmillo Sombrío | 10–14 | 30 % |
 | Juramento de Acero | 12–17 | 15 % |
