@@ -14,10 +14,10 @@ Desde el menú principal se puede iniciar una partida, consultar la sección de 
 
 Al comenzar una partida, el jugador:
 
-1. Introduce el nombre de su héroe y selecciona un arma.
-2. Explora la aldea, donde puede hablar con el comerciante o consultar su inventario.
-3. Avanza hacia la fortaleza y afronta tres combates por turnos.
-4. Decide en cada turno si atacar, utilizar una poción, consultar el inventario o rendirse.
+**1.** Introduce el nombre de su héroe y selecciona un arma.
+**2.** Explora la aldea, donde puede hablar con el comerciante o consultar su inventario.
+**3.** Avanza hacia la fortaleza y afronta tres combates por turnos.
+**4.** Decide en cada turno si atacar, utilizar una poción, consultar el inventario o rendirse.
 
 La aventura se completa al derrotar al Guardián final. Si el héroe pierde toda su vida, la partida termina. Actualmente, abandonar la exploración o rendirse en combate cierra el programa.
 
@@ -34,7 +34,7 @@ La aventura se completa al derrotar al Guardián final. Si el héroe pierde toda
 
 ### Enemigos
 
-| Enemigo | Vida | Daño |
+| **Enemigo** | **Vida** | **Daño** |
 | --- | ---: | ---: |
 | Centinela | 40 | 5–15 |
 | Caballero | 60 | 5–15 |
@@ -42,24 +42,24 @@ La aventura se completa al derrotar al Guardián final. Si el héroe pierde toda
 
 ### Armas disponibles
 
-| Arma | Daño definido | Esquiva definida |
+| **Arma* | **Daño definido** | **Esquiva definida** |
 | --- | --- | ---: |
 | Colmillo Sombrío | 10–14 | 30 % |
 | Juramento de Acero | 12–17 | 15 % |
 | Ira del Titán | 15–20 | 0 % |
 
-**Estado del sistema de armas:** el jugador puede seleccionar un arma y verla en el inventario. Sus valores están definidos en `Armas.java`, pero **todavía no modifican el daño ni activan la esquiva durante el combate**; por ahora se utilizan los valores de ataque de `Personaje`.
+**Estado del sistema de armas:** el jugador puede seleccionar un arma y verla en el inventario. Sus valores están definidos en **Armas.java**, pero **todavía no modifican el daño ni activan la esquiva durante el combate**; por ahora se utilizan los valores de ataque de **Personaje**.
 
 ## Estructura del código
 
 | Archivo | Responsabilidad |
 | --- | --- |
-| `Proyecto.java` | Inicio del programa, menús, exploración, combates, inventario, selección de arma y ayuda. |
-| `Personaje.java` | Datos del héroe y de los enemigos: nombre, vida y rangos de ataque. |
-| `Armas.java` | Datos de cada arma: nombre, daño mínimo y máximo y probabilidad de esquiva. |
-| `README.md` | Descripción del proyecto e instrucciones para ejecutarlo. |
+| **Proyecto.java** | Inicio del programa, menús, exploración, combates, inventario, selección de arma y ayuda. |
+| **Personaje.java** | Datos del héroe y de los enemigos: nombre, vida y rangos de ataque. |
+| **Armas.java** | Datos de cada arma: nombre, daño mínimo y máximo y probabilidad de esquiva. |
+| **README.md** | Descripción del proyecto e instrucciones para ejecutarlo. |
 
-La lógica principal se reparte en métodos, mientras que los objetos `Personaje` y `Armas` agrupan los datos relacionados con los personajes y su equipamiento.
+La lógica principal se reparte en métodos, mientras que los objetos **Personaje** y **Armas** agrupan los datos relacionados con los personajes y su equipamiento.
 
 ## Requisitos y ejecución
 
@@ -72,14 +72,14 @@ java -version
 javac -version
 ```
 
-Desde la carpeta donde están los tres archivos `.java`, compilar y ejecutar:
+Desde la carpeta donde están los tres archivos **.java**, compilar y ejecutar:
 
 ```bash
 javac -encoding UTF-8 Proyecto.java Personaje.java Armas.java
 java Proyecto
 ```
 
-También se puede abrir la carpeta en **Visual Studio Code** con las extensiones de Java y ejecutar la clase `Proyecto`, que contiene el método `main`.
+También se puede abrir la carpeta en **Visual Studio Code** con las extensiones de Java y ejecutar la clase **Proyecto**, que contiene el método **main**.
 
 ## Funcionalidades pendientes
 
@@ -95,7 +95,7 @@ Las ampliaciones opcionales se abordarán sin sustituir los requisitos obligator
 
 ## Control de versiones
 
-El desarrollo se registra mediante **Git y GitHub**, con commits descriptivos. La clase `Armas.java` se trabajó en una rama independiente llamada `armas` y posteriormente se integró en `main` mediante un merge (`f82cee9`).
+El desarrollo se registra mediante **Git y GitHub**, con commits descriptivos. La clase **Armas.java** se trabajó en una rama independiente llamada **armas** y posteriormente se integró en **main** mediante un merge (**f82cee9**).
 
 **Repositorio:** [El despertar del héroe en GitHub](https://github.com/pablomarquesgarcia08-sudo/Proyecto_el_despertar_del_h-roe_Pablo_Marqu-s)
 
