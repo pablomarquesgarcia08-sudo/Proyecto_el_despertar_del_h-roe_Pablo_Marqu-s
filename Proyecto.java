@@ -8,6 +8,8 @@ public class Proyecto {
 
         System.out.println("El despertar del héroe");
 
+         String[] nombresRanking = new String[10];
+        int[] puntuacionesRanking = new int[10];
         String iniciar;
 
         do {
@@ -91,20 +93,24 @@ public class Proyecto {
 
         Armas[] inventarioArmas = new Armas[1];
         int[] pociones = { 25, 25, 25 };
+        HabilidadEspecial habilidadElegida = seleccionarClase(teclado);
+        int[] usosHabilidad = {1};
 
         inventarioArmas[0] = seleccionarArma(teclado);
 
         System.out.println("Hola " + nombre + ", ahora eres un héroe.");
         mostrarVida(heroe);
 
-        explorarInicio(teclado, heroe, enemigo1, enemigo2, enemigo3, pociones, inventarioArmas);
+        explorarInicio(teclado, heroe, enemigo1, enemigo2, enemigo3, pociones, inventarioArmas, habilidadElegida, usosHabilidad);
     }
 
     public static void explorarInicio(Scanner teclado, Personaje heroe,
             Personaje enemigo1, Personaje enemigo2,
-            Personaje enemigo3, int[] pociones, Armas[] inventarioArmas) {
+            Personaje enemigo3, int[] pociones, Armas[] inventarioArmas,
+            HabilidadEspecial habilidadElegida, int[] usosHabilidad) {
 
         String opcion;
+        int puntuacion = 0;
 
         System.out.println("\nDespiertas en una aldea abandonada...");
 
@@ -116,6 +122,7 @@ public class Proyecto {
             System.out.println("2. Hablar con el comerciante");
             System.out.println("3. Ver inventario");
             System.out.println("4. Abandonar la partida");
+            
 
             opcion = teclado.nextLine();
 
@@ -125,21 +132,25 @@ public class Proyecto {
 
                     System.out.println("\nAvanzas hacia la fortaleza y te encuentras con el Centinela.");
 
-                    if (mostrarmenucombate(teclado, heroe, enemigo1, pociones, inventarioArmas)) {
-
+                    if (mostrarmenucombate(teclado, heroe, enemigo1, pociones, inventarioArmas, habilidadElegida, usosHabilidad)) {
+                        
                         System.out.println("Avanzas y te encuentras con un Caballero.");
+                        puntuacion += 100;
 
-                        if (mostrarmenucombate(teclado, heroe, enemigo2, pociones, inventarioArmas)) {
+                        if (mostrarmenucombate(teclado, heroe, enemigo2, pociones, inventarioArmas, habilidadElegida, usosHabilidad)) {
 
                             System.out.println("Avanzas y te encuentras con el Guardian final.");
+                            puntuacion += 100;
 
-                            if (mostrarmenucombate(teclado, heroe, enemigo3, pociones, inventarioArmas)) {
+                            if (mostrarmenucombate(teclado, heroe, enemigo3, pociones, inventarioArmas, habilidadElegida, usosHabilidad)) {
 
                                 System.out.println("¡Has completado la aventura!");
+                                puntuacion += 100;
+                                puntuacion += heroe.getVida();
                             }
                         }
                     }
-
+                    System.out.println("Tu puntuación final es: " + puntuacion);
                     return;
 
                 case "2":
@@ -154,6 +165,7 @@ public class Proyecto {
                     System.out.println("Has decidido abandonar la aventura.");
                     System.exit(0);
                     break;
+                
 
                 default:
                     System.out.println("Opción incorrecta.");
@@ -164,7 +176,7 @@ public class Proyecto {
     }
 
     public static boolean mostrarmenucombate(Scanner teclado, Personaje heroe,
-            Personaje enemigo, int[] pociones, Armas[] inventarioArmas) {
+            Personaje enemigo, int[] pociones, Armas[] inventarioArmas, HabilidadEspecial habilidadElegida, int[] usosHabilidad) {
 
         System.out.println("\nTe enfrentas a " + enemigo.getNombre());
 
@@ -182,6 +194,7 @@ public class Proyecto {
             System.out.println("2. Curarse");
             System.out.println("3. Ver inventario");
             System.out.println("4. Rendirse");
+            System.out.println("5. Usar habilidad especial (1 uso por partida)");
 
             opcion = teclado.nextLine();
 
@@ -273,6 +286,24 @@ public class Proyecto {
                     System.out.println("Te has rendido.");
                     System.out.println("La aventura ha terminado.");
                     System.exit(0);
+                    break;
+                
+                 case "5": 
+                    if (usosHabilidad[0] == 0) {
+                        System.out.println("Ya has usado tu habilidad especial en esta partida.");
+                    } else { 
+                        int danyo = habilidadElegida.usarHabilidad();
+
+                        enemigo.setVida(enemigo.getVida() - danyo);
+
+                        usosHabilidad[0] = 0;
+
+                        System.out.println("Has causado " + danyo + " de daño.");
+
+        if (enemigo.getVida() > 0) {
+            contraataca = true;
+        }
+                    }
                     break;
 
                 default:
@@ -419,5 +450,39 @@ public class Proyecto {
         teclado.nextLine();
 
     }
+
+    public static HabilidadEspecial seleccionarClase(Scanner teclado) {
+
+    String opcion;
+
+    while (true) {
+
+        System.out.println("\nSelecciona tu clase:");
+        System.out.println("1. Guerrero (Aragorn)");
+        System.out.println("2. Mago (Gandalf)");
+        System.out.println("3. Arquero (Legolas)");
+
+        opcion = teclado.nextLine();
+
+        switch (opcion) {
+
+            case "1":
+                System.out.println("Has elegido Guerrero.");
+                return new Guerrero();
+
+            case "2":
+                System.out.println("Has elegido Mago.");
+                return new Mago();
+
+            case "3":
+                System.out.println("Has elegido Arquero.");
+                return new Arquero();
+
+            default:
+                System.out.println("Opción incorrecta.");
+                continue;
+            }
+        }
+    }
 }
-//Preguntar si se puede hacer cooldown el enemigo hace que te golpee si estas 10 segundos sin atacar en batalla, y si atacas se reinicia el cooldown.
+//Revisar consultar ranking / ver inventario. Cuando se derrote se hace pregunta si quiere volver a jugar.

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Ranking SYSTEM "Ranking.dtd">
+
+<Ranking>
+    <jugador>
+        <nombre>Pablo M</nombre>
+        <puntuacion>365</puntuacion>
+    </jugador>
+    <jugador>
+        <nombre>Fito</nombre>
+        <puntuacion>200</puntuacion>
+    </jugador>
+    <jugador>
+        <nombre>Ismael</nombre>
+        <puntuacion>100</puntuacion>
+    </jugador>
+    <jugador>
+        <nombre>Joao Felix</nombre>
+        <puntuacion>0</puntuacion>
+    </jugador>
+</Ranking>
