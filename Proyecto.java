@@ -1,5 +1,20 @@
 import java.util.Scanner;
 
+import java.io.File;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 public class Proyecto {
 
     public static void main(String[] args) {
@@ -8,8 +23,9 @@ public class Proyecto {
 
         System.out.println("El despertar del héroe");
 
-         String[] nombresRanking = new String[10];
+        String[] nombresRanking = new String[10];
         int[] puntuacionesRanking = new int[10];
+        int cantidadJugadores = cargarRanking(nombresRanking, puntuacionesRanking);
         String iniciar;
 
         do {
@@ -44,16 +60,16 @@ public class Proyecto {
 
                 switch (opcion) {
 
-                    case "1":
-                        iniciarPartida(teclado);
+                   case "1":
+                        cantidadJugadores = iniciarPartida(teclado, nombresRanking, puntuacionesRanking, cantidadJugadores);
                         break;
 
-                    case "2":
-                        System.out.println("Mostrando ranking...");
+                   case "2":
+                        mostrarRanking(teclado, nombresRanking, puntuacionesRanking, cantidadJugadores);
                         break;
 
                     case "3":
-                        mostrarAyuda();
+                        mostrarAyuda(teclado);
                         break;
 
                     case "4":
@@ -69,7 +85,9 @@ public class Proyecto {
         }
     }
 
-    public static void iniciarPartida(Scanner teclado) {
+    public static int iniciarPartida(Scanner teclado, String[] nombresRanking, int[] puntuacionesRanking, int cantidadJugadores) 
+    { 
+        
 
         String nombre;
 
@@ -101,13 +119,22 @@ public class Proyecto {
         System.out.println("Hola " + nombre + ", ahora eres un héroe.");
         mostrarVida(heroe);
 
-        explorarInicio(teclado, heroe, enemigo1, enemigo2, enemigo3, pociones, inventarioArmas, habilidadElegida, usosHabilidad);
+        int puntuacion = explorarInicio(teclado, heroe, enemigo1, enemigo2, enemigo3, pociones, inventarioArmas, habilidadElegida, usosHabilidad);
+
+        System.out.println("Tu puntuacion final es: " + puntuacion);
+
+        cantidadJugadores = insertarPuntuacion(nombre, puntuacion,
+        nombresRanking, puntuacionesRanking, cantidadJugadores);
+
+        guardarRanking(nombresRanking, puntuacionesRanking, cantidadJugadores);
+
+        return cantidadJugadores;
+
+        
     }
 
-    public static void explorarInicio(Scanner teclado, Personaje heroe,
-            Personaje enemigo1, Personaje enemigo2,
-            Personaje enemigo3, int[] pociones, Armas[] inventarioArmas,
-            HabilidadEspecial habilidadElegida, int[] usosHabilidad) {
+    public static int explorarInicio(Scanner teclado, Personaje heroe, Personaje enemigo1, Personaje enemigo2, Personaje enemigo3, int[] pociones, Armas[] inventarioArmas, HabilidadEspecial habilidadElegida, int[] usosHabilidad) 
+    { 
 
         String opcion;
         int puntuacion = 0;
@@ -150,8 +177,7 @@ public class Proyecto {
                             }
                         }
                     }
-                    System.out.println("Tu puntuación final es: " + puntuacion);
-                    return;
+                    return puntuacion;
 
                 case "2":
                     System.out.println("Comerciante: Ten cuidado con los guardianes.");
@@ -163,9 +189,7 @@ public class Proyecto {
 
                 case "4":
                     System.out.println("Has decidido abandonar la aventura.");
-                    System.exit(0);
-                    break;
-                
+                    return puntuacion;
 
                 default:
                     System.out.println("Opción incorrecta.");
@@ -173,6 +197,8 @@ public class Proyecto {
             }
 
         } while (!opcion.equals("4"));
+        
+        return puntuacion;
     }
 
     public static boolean mostrarmenucombate(Scanner teclado, Personaje heroe,
@@ -285,8 +311,7 @@ public class Proyecto {
                 case "4":
                     System.out.println("Te has rendido.");
                     System.out.println("La aventura ha terminado.");
-                    System.exit(0);
-                    break;
+                    return false;
                 
                  case "5": 
                     if (usosHabilidad[0] == 0) {
@@ -394,7 +419,7 @@ public class Proyecto {
         }
     }
 
-    public static void mostrarAyuda() {
+    public static void mostrarAyuda(Scanner teclado) {
 
         System.out.println("\n====================================");
         System.out.println("       EL DESPERTAR DEL HEROE");
@@ -446,7 +471,6 @@ public class Proyecto {
         System.out.println("====================================\n");
 
         System.out.println("Presiona Enter para volver al menú principal...");
-        Scanner teclado = new Scanner(System.in);
         teclado.nextLine();
 
     }
@@ -484,5 +508,174 @@ public class Proyecto {
             }
         }
     }
+
+    public static int cargarRanking(String[] nombresRanking,
+        int[] puntuacionesRanking)
+    {
+
+        File archivo = new File("Ranking.xml");
+
+        if (!archivo.exists()) 
+        {
+        return 0;
+        }
+
+        int cantidadJugadores = 0;
+
+        try {
+            DocumentBuilderFactory fabrica =
+                    DocumentBuilderFactory.newInstance();
+
+            fabrica.setFeature(
+                    "http://apache.org/xml/features/nonvalidating/load-external-dtd",
+                    false);
+
+            fabrica.setFeature(
+                    "http://xml.org/sax/features/external-general-entities",
+                    false);
+
+            fabrica.setFeature(
+                    "http://xml.org/sax/features/external-parameter-entities",
+                    false);
+
+            DocumentBuilder constructor = fabrica.newDocumentBuilder();
+
+            Document documento = constructor.parse(archivo);
+            documento.getDocumentElement().normalize();
+
+            NodeList lista = documento.getElementsByTagName("jugador");
+
+            for (int i = 0; i < lista.getLength(); i++) {
+
+                Element jugador = (Element) lista.item(i);
+
+                String nombre = jugador.getElementsByTagName("nombre")
+                    .item(0).getTextContent();
+
+                int puntuacion = Integer.parseInt(
+                    jugador.getElementsByTagName("puntuacion")
+                            .item(0).getTextContent().trim());
+
+                cantidadJugadores = insertarPuntuacion(
+                    nombre, puntuacion,
+                    nombresRanking, puntuacionesRanking,
+                    cantidadJugadores);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error leyendo ranking: " + e.getMessage());
+        }
+
+        return cantidadJugadores;
+    }
+
+    public static void mostrarRanking(Scanner teclado, String[] nombresRanking,
+        int[] puntuacionesRanking, int cantidadJugadores) {
+
+        System.out.println("\n===== RANKING DE HEROES =====");
+
+        if (cantidadJugadores == 0) {
+            System.out.println("Todavia no hay puntuaciones.");
+        } else {
+
+            for (int i = 0; i < cantidadJugadores; i++) {
+
+                System.out.println((i + 1) + ". "
+                        + nombresRanking[i] + " - "
+                        + puntuacionesRanking[i] + " puntos");
+            }
+        }
+
+        System.out.println("\nPresiona Enter para volver al menú principal...");
+        teclado.nextLine();
+
+
+    }
+
+    public static int insertarPuntuacion(String nombre, int puntuacion,
+        String[] nombresRanking, int[] puntuacionesRanking,
+        int cantidadJugadores) {
+
+        int posicion = 0;
+
+        while (posicion < cantidadJugadores
+            && puntuacion <= puntuacionesRanking[posicion]) {
+
+            posicion++;
+        }
+
+        if (posicion >= nombresRanking.length) {
+        return cantidadJugadores;
+        }
+
+        int ultimaPosicion = cantidadJugadores;
+
+        if (ultimaPosicion == nombresRanking.length) {
+            ultimaPosicion = nombresRanking.length - 1;
+        }
+
+        for (int i = ultimaPosicion; i > posicion; i--) {
+
+            nombresRanking[i] = nombresRanking[i - 1];
+            puntuacionesRanking[i] = puntuacionesRanking[i - 1];
+        }
+
+        nombresRanking[posicion] = nombre;
+        puntuacionesRanking[posicion] = puntuacion;
+
+        if (cantidadJugadores < nombresRanking.length) {
+            cantidadJugadores++;
+        }
+
+        return cantidadJugadores;
+    }
+
+    public static void guardarRanking(String[] nombresRanking,
+        int[] puntuacionesRanking, int cantidadJugadores) {
+
+        try {
+            DocumentBuilderFactory fabrica =
+                    DocumentBuilderFactory.newInstance();
+
+            DocumentBuilder constructor = fabrica.newDocumentBuilder();
+
+            Document documento = constructor.newDocument();
+
+            Element raiz = documento.createElement("Ranking");
+            documento.appendChild(raiz);
+
+            for (int i = 0; i < cantidadJugadores; i++) {
+
+                Element jugador = documento.createElement("jugador");
+                raiz.appendChild(jugador);
+
+                Element nombre = documento.createElement("nombre");
+                nombre.setTextContent(nombresRanking[i]);
+                jugador.appendChild(nombre);
+
+                Element puntuacion = documento.createElement("puntuacion");
+                puntuacion.setTextContent(String.valueOf(puntuacionesRanking[i]));
+                jugador.appendChild(puntuacion);
+            }
+
+            TransformerFactory transformerFabrica = TransformerFactory.newInstance();
+
+            Transformer transformer = transformerFabrica.newTransformer();
+
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "Ranking.dtd");
+
+            DOMSource origen = new DOMSource(documento);
+
+            StreamResult destino = new StreamResult(new File("Ranking.xml"));
+
+            transformer.transform(origen, destino);
+
+            System.out.println("Ranking guardado correctamente.");
+
+        } catch (Exception e) {
+        System.out.println("Error guardando ranking: " + e.getMessage());
+        }
+    }
 }
-//Revisar consultar ranking / ver inventario. Cuando se derrote se hace pregunta si quiere volver a jugar.
