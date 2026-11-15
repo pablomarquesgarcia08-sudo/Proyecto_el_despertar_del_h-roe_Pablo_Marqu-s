@@ -17,6 +17,24 @@ import org.w3c.dom.NodeList;
 
 public class Proyecto {
 
+    private static final int VIDA_INICIAL = 100;
+
+    private static final int CURACION_POCION = 25;
+
+    private static final int PUNTOS_ENEMIGO = 100;
+
+    private static final int VIDA_CENTINELA = 40;
+    private static final int VIDA_CABALLERO = 60;
+    private static final int VIDA_GUARDIAN = 80;
+
+    private static final int ATAQUE_HEROE_MIN = 10;
+    private static final int ATAQUE_HEROE_MAX = 20;
+
+    private static final int ATAQUE_ENEMIGO_MIN = 5;
+    private static final int ATAQUE_ENEMIGO_MAX = 15;
+
+    private static final int MAX_RANKING = 10;
+
     public static void main(String[] args) {
 
         Scanner teclado = new Scanner(System.in);
@@ -103,14 +121,14 @@ public class Proyecto {
 
         } while (nombre.isEmpty());
 
-        Personaje heroe = new Personaje(nombre, 100, 0, 10, 20);
+        Personaje heroe = new Personaje(nombre, VIDA_INICIAL, 0, ATAQUE_HEROE_MIN, ATAQUE_HEROE_MAX);
 
-        Personaje enemigo1 = new Personaje("Centinela", 40, 0, 5, 15);
-        Personaje enemigo2 = new Personaje("Caballero", 60, 0, 5, 15);
-        Personaje enemigo3 = new Personaje("Guardian final", 80, 0, 5, 15);
+        Personaje enemigo1 = new Personaje("Centinela", VIDA_CENTINELA, 0, ATAQUE_ENEMIGO_MIN, ATAQUE_ENEMIGO_MAX);
+        Personaje enemigo2 = new Personaje("Caballero", VIDA_CABALLERO, 0, ATAQUE_ENEMIGO_MIN, ATAQUE_ENEMIGO_MAX);
+        Personaje enemigo3 = new Personaje("Guardian final", VIDA_GUARDIAN, 0, ATAQUE_ENEMIGO_MIN, ATAQUE_ENEMIGO_MAX);
 
         Armas[] inventarioArmas = new Armas[1];
-        int[] pociones = { 25, 25, 25 };
+        int[] pociones = { CURACION_POCION, CURACION_POCION, CURACION_POCION };
         HabilidadEspecial habilidadElegida = seleccionarClase(teclado);
         int[] usosHabilidad = {1};
 
@@ -162,17 +180,17 @@ public class Proyecto {
                     if (mostrarmenucombate(teclado, heroe, enemigo1, pociones, inventarioArmas, habilidadElegida, usosHabilidad)) {
                         
                         System.out.println("Avanzas y te encuentras con un Caballero.");
-                        puntuacion += 100;
+                        puntuacion += PUNTOS_ENEMIGO;
 
                         if (mostrarmenucombate(teclado, heroe, enemigo2, pociones, inventarioArmas, habilidadElegida, usosHabilidad)) {
 
                             System.out.println("Avanzas y te encuentras con el Guardian final.");
-                            puntuacion += 100;
+                            puntuacion += PUNTOS_ENEMIGO;
 
                             if (mostrarmenucombate(teclado, heroe, enemigo3, pociones, inventarioArmas, habilidadElegida, usosHabilidad)) {
 
                                 System.out.println("¡Has completado la aventura!");
-                                puntuacion += 100;
+                                puntuacion += PUNTOS_ENEMIGO;
                                 puntuacion += heroe.getVida();
                             }
                         }
