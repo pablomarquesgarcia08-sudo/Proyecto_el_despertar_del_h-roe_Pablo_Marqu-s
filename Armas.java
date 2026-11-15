@@ -3,13 +3,15 @@ public class Armas {
     private String nombre;
     private int ataqueMax;
     private int ataqueMin;
-    private int probabilidadesquivar;
+    private int probabilidadFallo;
 
-    public Armas(String nombre, int ataqueMin, int ataqueMax, int probabilidadesquivar) {
+    public Armas(String nombre, int ataqueMin,
+            int ataqueMax, int probabilidadFallo) {
+
         this.nombre = nombre;
         this.ataqueMin = ataqueMin;
         this.ataqueMax = ataqueMax;
-        this.probabilidadesquivar = probabilidadesquivar;
+        this.probabilidadFallo = probabilidadFallo;
     }
 
     public String getNombre() {
@@ -36,12 +38,11 @@ public class Armas {
         this.ataqueMin = ataqueMin;
     }
 
-    public int getProbabilidadesquivar() {
-        return probabilidadesquivar;
+    public int getProbabilidadFallo() {
+        return probabilidadFallo;
     }
 
-    public void setProbabilidadesquivar(int probabilidadesquivar) {
-        this.probabilidadesquivar = probabilidadesquivar;
+    public void setProbabilidadFallo(int probabilidadFallo) {
+        this.probabilidadFallo = probabilidadFallo;
     }
-    
 }

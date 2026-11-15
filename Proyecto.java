@@ -229,10 +229,19 @@ public class Proyecto {
             switch (opcion) {
 
                 case "1":
+                    if (Math.random() * 100 < inventarioArmas[0].getProbabilidadFallo()) {
+
+                    System.out.println("¡Has fallado el ataque!");
+
+                    contraataca = true;
+                    break;
+            
+                    }
 
                     int danyoHeroe = (int) (Math.random() *
-                            (heroe.getAtaqueMax() - heroe.getAtaqueMin() + 1)
-                            + heroe.getAtaqueMin());
+                            (inventarioArmas[0].getAtaqueMax()
+                            - inventarioArmas[0].getAtaqueMin() + 1)
+                            + inventarioArmas[0].getAtaqueMin());
 
                     enemigo.setVida(enemigo.getVida() - danyoHeroe);
 
@@ -397,20 +406,24 @@ public class Proyecto {
         String opcion;
 
         while (true) {
+
             System.out.println("\nSelecciona un arma:");
-            System.out.println("1. Colmillo Sombrio (10-14 de daño y 30% de probabilidad de esquivar)");
-            System.out.println("2. Juramento de Acero (12-17 de daño y 15% de probabilidad de esquivar)");
-            System.out.println("3. Ira del Titan (15-20 de daño y 0% de probabilidad de esquivar)");
+            System.out.println("1. Colmillo Sombrio (10-14 daño, 0% fallo)");
+            System.out.println("2. Juramento de Acero (12-17 daño, 15% fallo)");
+            System.out.println("3. Ira del Titan (15-20 daño, 30% fallo)");
 
             opcion = teclado.nextLine();
 
             switch (opcion) {
+
                 case "1":
-                    return new Armas("Colmillo Sombrio", 10, 14, 30);
+                    return new Armas("Colmillo Sombrio", 10, 14, 0);
+
                 case "2":
                     return new Armas("Juramento de Acero", 12, 17, 15);
+
                 case "3":
-                    return new Armas("Ira del Titan", 15, 20, 0);
+                    return new Armas("Ira del Titan", 15, 20, 30);
 
                 default:
                     System.out.println("Opción incorrecta.");
@@ -418,6 +431,7 @@ public class Proyecto {
             }
         }
     }
+
 
     public static void mostrarAyuda(Scanner teclado) {
 
@@ -445,7 +459,11 @@ public class Proyecto {
         System.out.println("Selecciona Caminar para iniciar la aventura.");
 
         System.out.println("\n--- DURANTE EL COMBATE ---");
-        System.out.println("1. Atacar: causas entre 10 y 20 de daño.");
+        System.out.println("1. Atacar: el daño depende del arma equipada.");
+        System.out.println("  Colmillo Sombrio: 10-14 daño, 0% de fallo.");
+        System.out.println("  Juramento de Acero: 12-17 daño, 15% de fallo.");
+        System.out.println("  Ira del Titan: 15-20 daño, 30% de fallo.");
+        System.out.println("  Si fallas, el enemigo puede contraatacar.");
         System.out.println("2. Curarse: recuperas hasta 25 de vida.");
         System.out.println("3. Inventario: consultas tus pociones.");
         System.out.println("4. Rendirse: abandonas el combate.");
