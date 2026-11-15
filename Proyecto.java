@@ -113,7 +113,7 @@ public class Proyecto {
 
         do {
             System.out.print("\nIntroduce el nombre del héroe: ");
-            nombre = teclado.nextLine();
+            nombre = teclado.nextLine().trim();
 
             if (nombre.isEmpty()) {
                 System.out.println("Error: El nombre no puede estar vacío");
