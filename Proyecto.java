@@ -498,6 +498,13 @@ public class Proyecto {
         System.out.println("Consultar el inventario no consume turno.");
         System.out.println("Tu vida se conserva entre enfrentamientos.");
 
+        System.out.println("\n--- SISTEMA DE PUNTUACION ---");
+        System.out.println("Cada enemigo derrotado otorga 100 puntos.");
+        System.out.println("Si derrotas a los tres enemigos,");
+        System.out.println("recibes una bonificacion igual a tu vida restante.");
+        System.out.println("Si pierdes o abandonas, conservas los puntos obtenidos.");
+        System.out.println("Las 10 mejores puntuaciones aparecen en el ranking.");
+
         System.out.println("\n--- VICTORIA Y DERROTA ---");
         System.out.println("Ganas al derrotar al Guardian final.");
         System.out.println("Pierdes si tu vida llega a cero.");
