@@ -1,16 +1,39 @@
-# Compiled class file
+# JAVA - Archivos compilados
 *.class
 
-# Log file
-*.log
+# Carpetas de compilacion
+bin/
+target/
+out/
+build/
 
-# BlueJ files
+# Visual Studio Code
+.vscode/*
+!.vscode/tasks.json
+
+# Otros entornos de desarrollo
+.idea/
+*.iml
+.classpath
+.project
+.settings/
 *.ctxt
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Archivos temporales y registros
+*.log
+*.tmp
+*.bak
+hs_err_pid*
+replay_pid*
 
-# Package Files #
+# Copias de seguridad del proyecto
+*_antes_merge.txt
+*_respaldo_*.txt
+
+# Archivos generados
+Ranking.html
+
+# Paquetes y comprimidos
 *.jar
 *.war
 *.nar
@@ -19,6 +42,7 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# Otros archivos locales
+.mtj.tmp/
+.DS_Store
+Thumbs.db
