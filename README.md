@@ -149,12 +149,12 @@ Cada jugador se representa mediante un elemento **jugador**, que contiene su nom
 
 Ejemplo:
 
-```xml
+
 <jugador>
     <nombre>Pablo</nombre>
     <puntuacion>365</puntuacion>
 </jugador>
-```
+
 
 El archivo XML permite conservar las puntuaciones entre ejecuciones del programa.
 
@@ -248,8 +248,6 @@ Las opciones de los menús se leen como cadenas de texto, lo que permite mostrar
 
 Para ejecutar el proyecto se necesita tener instalado un JDK de Java.
 
-Se recomienda utilizar **JDK 17 o una versión posterior**.
-
 El programa no necesita bibliotecas externas, ya que utiliza funcionalidades incluidas en Java.
 
 Puede ejecutarse desde una terminal o mediante Visual Studio Code.
@@ -258,10 +256,8 @@ Puede ejecutarse desde una terminal o mediante Visual Studio Code.
 
 Abrir una terminal y ejecutar:
 
-```bash
 java -version
 javac -version
-```
 
 Estos comandos permiten comprobar que Java y su compilador están disponibles.
 
@@ -269,9 +265,7 @@ Estos comandos permiten comprobar que Java y su compilador están disponibles.
 
 Abrir una terminal en la carpeta donde se encuentran los archivos del proyecto y ejecutar:
 
-```bash
 javac -encoding UTF-8 Proyecto.java Personaje.java Armas.java HabilidadEspecial.java Guerrero.java Mago.java Arquero.java
-```
 
 Este comando compila las clases Java necesarias para ejecutar el videojuego.
 
@@ -279,9 +273,7 @@ Este comando compila las clases Java necesarias para ejecutar el videojuego.
 
 Una vez compilado, ejecutar:
 
-```bash
 java Proyecto
-```
 
 Es importante ejecutar el programa desde la carpeta del proyecto para que pueda localizar correctamente el archivo **Ranking.xml**.
 
