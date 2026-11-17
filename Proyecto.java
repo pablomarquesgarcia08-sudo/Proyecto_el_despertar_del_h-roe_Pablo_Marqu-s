@@ -676,6 +676,12 @@ public class Proyecto {
             DocumentBuilder constructor = fabrica.newDocumentBuilder();
 
             Document documento = constructor.newDocument();
+            documento.appendChild(
+                documento.createProcessingInstruction(
+                     "xml-stylesheet",
+                     "type=\"text/xsl\" href=\"Ranking.xsl\""
+                    )
+                );
 
             Element raiz = documento.createElement("Ranking");
             documento.appendChild(raiz);
@@ -692,26 +698,27 @@ public class Proyecto {
                 Element puntuacion = documento.createElement("puntuacion");
                 puntuacion.setTextContent(String.valueOf(puntuacionesRanking[i]));
                 jugador.appendChild(puntuacion);
+                }
+
+                TransformerFactory transformerFabrica = TransformerFactory.newInstance();
+
+                Transformer transformer = transformerFabrica.newTransformer();
+
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+                transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "Ranking.dtd");
+
+                DOMSource origen = new DOMSource(documento);
+
+                StreamResult destino = new StreamResult(new File("Ranking.xml"));
+
+                transformer.transform(origen, destino);
+
+                System.out.println("Ranking guardado correctamente.");
+
+            } catch (Exception e) {
+            System.out.println("Error guardando ranking: " + e.getMessage());
             }
-
-            TransformerFactory transformerFabrica = TransformerFactory.newInstance();
-
-            Transformer transformer = transformerFabrica.newTransformer();
-
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-            transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "Ranking.dtd");
-
-            DOMSource origen = new DOMSource(documento);
-
-            StreamResult destino = new StreamResult(new File("Ranking.xml"));
-
-            transformer.transform(origen, destino);
-
-            System.out.println("Ranking guardado correctamente.");
-
-        } catch (Exception e) {
-        System.out.println("Error guardando ranking: " + e.getMessage());
         }
     }
-}
+
