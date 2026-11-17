@@ -41,8 +41,8 @@ public class Proyecto {
 
         System.out.println("El despertar del héroe");
 
-        String[] nombresRanking = new String[10];
-        int[] puntuacionesRanking = new int[10];
+        String[] nombresRanking = new String[MAX_RANKING];
+        int[] puntuacionesRanking = new int[MAX_RANKING];
         int cantidadJugadores = cargarRanking(nombresRanking, puntuacionesRanking);
         String iniciar;
 
