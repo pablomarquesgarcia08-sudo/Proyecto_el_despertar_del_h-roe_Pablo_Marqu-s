@@ -10,12 +10,10 @@
         <html>
             <head>
                 <title>Ranking de jugadores</title>
+                <link rel="stylesheet" href="Ranking.css"/>
             </head>
-
             <body>
-
                 <h1>Ranking de jugadores</h1>
-
                 <table border="1" cellpadding="8" cellspacing="0">
 
                     <tr>

@@ -174,14 +174,13 @@ De esta forma, se dispone de una definición formal de la estructura de los dato
 
 El archivo **Ranking.xsl** permite transformar los datos del XML en una tabla HTML con un diseño visual.
 
-La tabla muestra:
+La transformación XSLT genera una tabla HTML que muestra:
 
-- Posición del jugador.
-- Nombre.
-- Puntuación.
-- Estado dentro de la clasificación.
+- La posición de cada jugador.
+- El nombre del jugador.
+- La puntuación obtenida.
 
-Los primeros puestos reciben un tratamiento visual diferenciado para destacar las posiciones más altas.
+Los jugadores se ordenan de mayor a menor puntuación mediante la instrucción xsl:sort. El diseño visual se aplica utilizando una hoja de estilos externa, Ranking.css.
 
 El archivo **Ranking.xml** incluye una referencia a **Ranking.xsl**, que se conserva cuando Java actualiza el ranking.
 
@@ -191,16 +190,20 @@ El proyecto está organizado en distintos archivos, cada uno con responsabilidad
 
 | **Archivo** | **Responsabilidad** |
 | --- | --- |
-| **Proyecto.java** | Clase principal. Gestiona los menús, las partidas, los combates, el inventario, las puntuaciones y el ranking. |
+| **Proyecto.java** | Clase principal. Gestiona los menús, las partidas, la exploración, el inventario, las puntuaciones y el ranking. |
+| **Combate.java** | Gestiona los combates por turnos, los ataques, las curaciones, las habilidades especiales y los contraataques enemigos. |
 | **Personaje.java** | Representa los personajes del juego y gestiona sus datos, como nombre, vida y ataque. |
 | **Armas.java** | Define las características de las armas: nombre, daño mínimo, daño máximo y probabilidad de fallo. |
 | **HabilidadEspecial.java** | Interfaz que establece el método utilizado por las habilidades especiales. |
 | **Guerrero.java** | Implementa la habilidad especial del Guerrero. |
 | **Mago.java** | Implementa la habilidad especial del Mago. |
-| **Arquero.java` | Implementa la habilidad especial del Arquero. |
+| **Arquero.java** | Implementa la habilidad especial del Arquero. |
 | **Ranking.xml** |  Almacena las puntuaciones de los jugadores. |
 | **Ranking.dtd`**| Define la estructura del archivo XML. |
 | **Ranking.xsl** | Transforma el ranking XML en una tabla visual HTML. |
+| **Ranking.css** | Define los estilos de la tabla HTML, centrando el contenido y aplicando un fondo azul claro a las cabeceras. |
+| **LeerXML.java** | Lee el archivo Ranking.xml y muestra los nombres y puntuaciones de los jugadores en la consola. |
+| **ModificarXML.java** | Permite modificar la puntuación de un jugador en Ranking_prueba.xml sin alterar el ranking original. |
 | **.gitignore** | Excluye archivos compilados y otros archivos que no deben incorporarse al repositorio. |
 | **README.md** | Documentación general e instrucciones de ejecución del proyecto. |
 
@@ -213,7 +216,7 @@ Entre los más importantes se encuentran:
 - **main()**: inicia el programa y gestiona el menú principal.
 - **iniciarPartida()**: solicita los datos del jugador y prepara una nueva partida.
 - **explorarInicio()**: controla las opciones de exploración y el avance de la aventura.
-- **mostrarmenucombate()**: desarrolla los combates por turnos.
+-  **Combate.mostrarmenucombate()**: método de la clase Combate.java que gestiona los enfrentamientos por turnos, los ataques, las pociones y las habilidades especiales.
 - **mostrarVida()**: muestra los puntos de vida actuales del personaje.
 - **contarPociones()**: calcula cuántas pociones quedan disponibles.
 - **mostrarInventario()**: muestra la información del inventario.
@@ -265,7 +268,7 @@ Estos comandos permiten comprobar que Java y su compilador están disponibles.
 
 Abrir una terminal en la carpeta donde se encuentran los archivos del proyecto y ejecutar:
 
-javac -encoding UTF-8 Proyecto.java Personaje.java Armas.java HabilidadEspecial.java Guerrero.java Mago.java Arquero.java
+javac -encoding UTF-8 Proyecto.java Combate.java Personaje.java Armas.java HabilidadEspecial.java Guerrero.java Mago.java Arquero.java
 
 Este comando compila las clases Java necesarias para ejecutar el videojuego.
 
@@ -315,7 +318,12 @@ El desarrollo del proyecto se gestiona mediante **Git y GitHub**.
 
 Se utilizan commits descriptivos para registrar la evolución del código, las correcciones de errores y la incorporación de nuevas funcionalidades.
 
-Durante el desarrollo también se ha utilizado una rama independiente denominada **armas**, que posteriormente se integró en la rama principal **main**.
+Durante el desarrollo se han utilizado dos ramas de trabajo independientes:
+
+- **armas:** utilizada para desarrollar y mejorar el sistema de armas del videojuego.
+- **combate:** utilizada para separar la lógica de los enfrentamientos de Proyecto.java y trasladarla a Combate.java, mejorando la organización del código.
+
+Ambas ramas se integraron posteriormente en **main** mediante operaciones de merge, conservando el historial de cambios y permitiendo comprobar la evolución del proyecto.
 
 El repositorio incorpora un archivo **.gitignore** para evitar incluir archivos compilados, carpetas de compilación y determinados archivos locales del entorno de desarrollo.
 

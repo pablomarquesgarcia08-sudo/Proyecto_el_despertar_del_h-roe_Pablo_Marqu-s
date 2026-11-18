@@ -3,31 +3,15 @@
 <!DOCTYPE Ranking SYSTEM "Ranking.dtd">
 <Ranking>
     <jugador>
-        <nombre>pablo</nombre>
-        <puntuacion>377</puntuacion>
-    </jugador>
-    <jugador>
-        <nombre>Paco32</nombre>
-        <puntuacion>367</puntuacion>
-    </jugador>
-    <jugador>
-        <nombre>Pablo M</nombre>
-        <puntuacion>365</puntuacion>
-    </jugador>
-    <jugador>
-        <nombre>Cheddar1</nombre>
-        <puntuacion>360</puntuacion>
-    </jugador>
-    <jugador>
-        <nombre>Fito</nombre>
-        <puntuacion>200</puntuacion>
-    </jugador>
-    <jugador>
-        <nombre>Ismael</nombre>
-        <puntuacion>100</puntuacion>
+        <nombre>Pablo</nombre>
+        <puntuacion>356</puntuacion>
     </jugador>
     <jugador>
         <nombre>Joao Felix</nombre>
-        <puntuacion>0</puntuacion>
+        <puntuacion>335</puntuacion>
+    </jugador>
+    <jugador>
+        <nombre>PCC</nombre>
+        <puntuacion>330</puntuacion>
     </jugador>
 </Ranking>
